@@ -21,11 +21,11 @@
       <source-file src="src/android/com/github/nkzawa/engineio/client/HandshakeData.java"  target-dir="src/com/github/nkzawa/engineio/client" />
       <source-file src="src/android/com/github/nkzawa/engineio/client/Socket.java"  target-dir="src/com/github/nkzawa/engineio/client" />
       <source-file src="src/android/com/github/nkzawa/engineio/client/Transport.java"  target-dir="src/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/Polling.java"  target-dir="src/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/PollingXHR.java"  target-dir="src/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/WebSocket.java"  target-dir="src/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/parser/Packet.java"  target-dir="src/com/github/nkzawa/engineio/parser/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/parser/Parser.java"  target-dir="src/com/github/nkzawa/engineio/parser/client" />
+      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/Polling.java"  target-dir="src/com/github/nkzawa/engineio/client/transports" />
+      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/PollingXHR.java"  target-dir="src/com/github/nkzawa/engineio/client/transports" />
+      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/WebSocket.java"  target-dir="src/com/github/nkzawa/engineio/client/transports" />
+      <source-file src="src/android/com/github/nkzawa/engineio/parser/Packet.java"  target-dir="src/com/github/nkzawa/engineio/parser" />
+      <source-file src="src/android/com/github/nkzawa/engineio/parser/Parser.java"  target-dir="src/com/github/nkzawa/engineio/parser" />
       <source-file src="src/android/com/github/nkzawa/global/Global.java"  target-dir="src/com/github/nkzawa/global" />
       <source-file src="src/android/com/github/nkzawa/hasbinarydata/HasBinaryData.java"  target-dir="src/com/github/nkzawa/hasbinarydata" />
       <source-file src="src/android/com/github/nkzawa/parseqs/ParseQS.java"  target-dir="src/com/github/nkzawa/parseqs" />
