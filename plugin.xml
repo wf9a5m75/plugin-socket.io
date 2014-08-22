@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova.socket.io" version="1.1.4" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="plugin.socket.io" version="1.1.4" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>cordova.socket.io</name>
     
     <js-module name="SocketIO" src="www/socketio.js">
-        <clobbers target="cordova.socket.io" />
+        <clobbers target="plugin.socket.io" />
     </js-module>
     <config-file target="res/xml/config.xml" parent="/*">
         <feature name="SocketIO">
-            <param name="android-package" value="om.example.socketio_test.SocketIO" />
+            <param name="android-package" value="plugin.socket.io.SocketIO" />
         </feature>
     </config-file>
     
@@ -16,33 +16,33 @@
     </engines>
     
     <platform name="android">
-      <source-file src="src/android/com/github/nkzawa/emitter/Emitter.java" target-dir="src/android/com/github/nkzawa/emitter" />
-      <source-file src="src/android/com/github/nkzawa/engineio/client/EngineIOException.java"  target-dir="src/android/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/client/HandshakeData.java"  target-dir="src/android/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/client/Socket.java"  target-dir="src/android/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/client/Transport.java"  target-dir="src/android/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/Polling.java"  target-dir="src/android/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/PollingXHR.java"  target-dir="src/android/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/WebSocket.java"  target-dir="src/android/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/parser/Packet.java"  target-dir="src/android/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/engineio/parser/Parser.java"  target-dir="src/android/com/github/nkzawa/engineio/client" />
-      <source-file src="src/android/com/github/nkzawa/global/Global.java"  target-dir="src/android/com/github/nkzawa/global" />
-      <source-file src="src/android/com/github/nkzawa/hasbinarydata/HasBinaryData.java"  target-dir="src/android/com/github/nkzawa/hasbinarydata" />
-      <source-file src="src/android/com/github/nkzawa/parseqs/ParseQS.java"  target-dir="src/android/com/github/nkzawa/parseqs" />
-      <source-file src="src/android/com/github/nkzawa/socketio/client/Ack.java"  target-dir="src/android/com/github/nkzawa/socketio/client" />
-      <source-file src="src/android/com/github/nkzawa/socketio/client/IO.java"  target-dir="src/android/com/github/nkzawa/socketio/client" />
-      <source-file src="src/android/com/github/nkzawa/socketio/client/Manager.java"  target-dir="src/android/com/github/nkzawa/socketio/client" />
-      <source-file src="src/android/com/github/nkzawa/socketio/client/On.java"  target-dir="src/android/com/github/nkzawa/socketio/client" />
-      <source-file src="src/android/com/github/nkzawa/socketio/client/Socket.java"  target-dir="src/android/com/github/nkzawa/socketio/client" />
-      <source-file src="src/android/com/github/nkzawa/socketio/client/SocketIOException.java"  target-dir="src/android/com/github/nkzawa/socketio/client" />
-      <source-file src="src/android/com/github/nkzawa/socketio/client/Url.java"  target-dir="src/android/com/github/nkzawa/socketio/client" />
-      <source-file src="src/android/com/github/nkzawa/socketio/parser/Binary.java"  target-dir="src/android/com/github/nkzawa/socketio/parser" />
-      <source-file src="src/android/com/github/nkzawa/socketio/parser/Packet.java"  target-dir="src/android/com/github/nkzawa/socketio/parser" />
-      <source-file src="src/android/com/github/nkzawa/socketio/parser/Parser.java"  target-dir="src/android/com/github/nkzawa/socketio/parser" />
-      <source-file src="src/android/com/github/nkzawa/thread/EventThread.java"  target-dir="src/android/com/github/nkzawa/thread" />
-      <source-file src="src/android/com/github/nkzawa/utf8/UTF8.java"  target-dir="src/android/com/github/nkzawa/utf8" />
-      <source-file src="src/android/com/github/nkzawa/utf8/UTF8Exception.java"  target-dir="src/android/com/github/nkzawa/utf8" />
-      <source-file src="src/android/plugin/socket/io/SocketIO.java" target-dir="src/android/plugin/socket/io" />
+      <source-file src="src/android/com/github/nkzawa/emitter/Emitter.java" target-dir="src/com/github/nkzawa/emitter" />
+      <source-file src="src/android/com/github/nkzawa/engineio/client/EngineIOException.java"  target-dir="src/com/github/nkzawa/engineio/client" />
+      <source-file src="src/android/com/github/nkzawa/engineio/client/HandshakeData.java"  target-dir="src/com/github/nkzawa/engineio/client" />
+      <source-file src="src/android/com/github/nkzawa/engineio/client/Socket.java"  target-dir="src/com/github/nkzawa/engineio/client" />
+      <source-file src="src/android/com/github/nkzawa/engineio/client/Transport.java"  target-dir="src/com/github/nkzawa/engineio/client" />
+      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/Polling.java"  target-dir="src/com/github/nkzawa/engineio/client" />
+      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/PollingXHR.java"  target-dir="src/com/github/nkzawa/engineio/client" />
+      <source-file src="src/android/com/github/nkzawa/engineio/client/transports/WebSocket.java"  target-dir="src/com/github/nkzawa/engineio/client" />
+      <source-file src="src/android/com/github/nkzawa/engineio/parser/Packet.java"  target-dir="src/com/github/nkzawa/engineio/client" />
+      <source-file src="src/android/com/github/nkzawa/engineio/parser/Parser.java"  target-dir="src/com/github/nkzawa/engineio/client" />
+      <source-file src="src/android/com/github/nkzawa/global/Global.java"  target-dir="src/com/github/nkzawa/global" />
+      <source-file src="src/android/com/github/nkzawa/hasbinarydata/HasBinaryData.java"  target-dir="src/com/github/nkzawa/hasbinarydata" />
+      <source-file src="src/android/com/github/nkzawa/parseqs/ParseQS.java"  target-dir="src/com/github/nkzawa/parseqs" />
+      <source-file src="src/android/com/github/nkzawa/socketio/client/Ack.java"  target-dir="src/com/github/nkzawa/socketio/client" />
+      <source-file src="src/android/com/github/nkzawa/socketio/client/IO.java"  target-dir="src/com/github/nkzawa/socketio/client" />
+      <source-file src="src/android/com/github/nkzawa/socketio/client/Manager.java"  target-dir="src/com/github/nkzawa/socketio/client" />
+      <source-file src="src/android/com/github/nkzawa/socketio/client/On.java"  target-dir="src/com/github/nkzawa/socketio/client" />
+      <source-file src="src/android/com/github/nkzawa/socketio/client/Socket.java"  target-dir="src/com/github/nkzawa/socketio/client" />
+      <source-file src="src/android/com/github/nkzawa/socketio/client/SocketIOException.java"  target-dir="src/com/github/nkzawa/socketio/client" />
+      <source-file src="src/android/com/github/nkzawa/socketio/client/Url.java"  target-dir="src/com/github/nkzawa/socketio/client" />
+      <source-file src="src/android/com/github/nkzawa/socketio/parser/Binary.java"  target-dir="src/com/github/nkzawa/socketio/parser" />
+      <source-file src="src/android/com/github/nkzawa/socketio/parser/Packet.java"  target-dir="src/com/github/nkzawa/socketio/parser" />
+      <source-file src="src/android/com/github/nkzawa/socketio/parser/Parser.java"  target-dir="src/com/github/nkzawa/socketio/parser" />
+      <source-file src="src/android/com/github/nkzawa/thread/EventThread.java"  target-dir="src/com/github/nkzawa/thread" />
+      <source-file src="src/android/com/github/nkzawa/utf8/UTF8.java"  target-dir="src/com/github/nkzawa/utf8" />
+      <source-file src="src/android/com/github/nkzawa/utf8/UTF8Exception.java"  target-dir="src/com/github/nkzawa/utf8" />
+      <source-file src="src/android/plugin/socket/io/SocketIO.java" target-dir="src/plugin/socket/io" />
       <source-file src="src/android/libs/java_websocket.jar" target-dir="libs" />
     </platform>
 </plugin>
