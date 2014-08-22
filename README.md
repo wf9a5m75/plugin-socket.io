@@ -35,4 +35,5 @@ socket.on("error", function(err) {
 
 ###Note
 This plugin works with Socket.io >= 1.0
+
 Sending binary is not available.
