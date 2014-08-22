@@ -8,9 +8,8 @@ cordova install https://github.com/wf9a5m75/plugin-socket.io
 ```
 
 This plugin uses these libraries:
-
-https://github.com/nkzawa/socket.io-client.java
-https://github.com/nkzawa/engine.io-client.java
+- https://github.com/nkzawa/socket.io-client.java
+- https://github.com/nkzawa/engine.io-client.java
 
 ###Usage
 
