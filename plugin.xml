@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="plugin.socket.io" version="1.1.4" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>cordova.socket.io</name>
+<plugin id="plugin.socket.io" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>plugin.socket.io</name>
     
     <js-module name="SocketIO" src="www/socketio.js">
         <clobbers target="plugin.socket.io" />
@@ -10,6 +10,10 @@
             <param name="android-package" value="plugin.socket.io.SocketIO" />
         </feature>
     </config-file>
+    <description>This plugin works with socket.io >= 1.0</description>
+    <repo>https://github.com/wf9a5m75/plugin-socket.io</repo>
+    <license>Apache 2.0</license>
+    <keywords>socket.io</keywords>
     
     <engines>
       <engine name="cordova" version=">=3.0.0" />
