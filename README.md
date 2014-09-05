@@ -4,7 +4,7 @@ plugin-socket.io
 socket.io plugin for PhoneGap/Cordova
 
 ```
-cordova install https://github.com/wf9a5m75/plugin-socket.io
+cordova plugin add https://github.com/wf9a5m75/plugin-socket.io
 ```
 
 This plugin uses these libraries:
