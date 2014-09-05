@@ -4,8 +4,6 @@ plugin-socket.io
 socket.io plugin for PhoneGap/Cordova.
 Currently Android only.
 
-socket.io > 1.0
-
 ```
 cordova plugin add https://github.com/wf9a5m75/plugin-socket.io
 ```
