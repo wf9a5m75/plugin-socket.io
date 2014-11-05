@@ -115,7 +115,7 @@ public class Socket extends Emitter {
     private List<String> transports;
     private List<String> upgrades;
     private Map<String, String> query;
-    private LinkedList<Packet> writeBuffer = new LinkedList<Packet>();
+    /*package*/ LinkedList<Packet> writeBuffer = new LinkedList<Packet>();
     private LinkedList<Runnable> callbackBuffer = new LinkedList<Runnable>();
     /*package*/ Transport transport;
     private Future pingTimeoutTimer;
@@ -164,10 +164,19 @@ public class Socket extends Emitter {
 
     public Socket(Options opts) {
         if (opts.host != null) {
-            String[] pieces = opts.host.split(":");
-            opts.hostname = pieces[0];
-            if (pieces.length > 1) {
-                opts.port = Integer.parseInt(pieces[pieces.length - 1]);
+            boolean ipv6uri = opts.host.indexOf(']') != -1;
+            String[] pieces = ipv6uri ? opts.host.split("]:") : opts.host.split(":");
+            boolean ipv6 = (pieces.length > 2 || opts.host.indexOf("::") == -1);
+            if (ipv6) {
+                opts.hostname = opts.host;
+            } else {
+                opts.hostname = pieces[0];
+                if (ipv6uri) {
+                    opts.hostname = opts.hostname.substring(1);
+                }
+                if (pieces.length > 1) {
+                    opts.port = Integer.parseInt(pieces[pieces.length - 1]);
+                }
             }
         }
 
@@ -199,6 +208,16 @@ public class Socket extends Emitter {
                 String transportName;
                 if (Socket.this.rememberUpgrade && Socket.priorWebsocketSuccess && Socket.this.transports.contains(WebSocket.NAME)) {
                     transportName = WebSocket.NAME;
+                } else if (0 == Socket.this.transports.size()) {
+                    // Emit error on next tick so it can be listened to
+                    final Socket self = Socket.this;
+                    EventThread.nextTick(new Runnable() {
+                        @Override
+                        public void run() {
+                            self.emit(Socket.EVENT_ERROR, new EngineIOException("No transports available"));
+                        }
+                    });
+                    return;
                 } else {
                     transportName = Socket.this.transports.get(0);
                 }
@@ -306,6 +325,7 @@ public class Socket extends Emitter {
                             logger.fine(String.format("probe transport '%s' pong", name));
                             self.upgrading = true;
                             self.emit(EVENT_UPGRADING, transport[0]);
+                            if (null == transport) return;
                             Socket.priorWebsocketSuccess = WebSocket.NAME.equals(transport[0].name);
 
                             logger.fine(String.format("pausing current transport '%s'", self.transport.name));
@@ -313,9 +333,7 @@ public class Socket extends Emitter {
                                 @Override
                                 public void run() {
                                     if (failed[0]) return;
-                                    if (ReadyState.CLOSED == self.readyState || ReadyState.CLOSING == self.readyState) {
-                                        return;
-                                    }
+                                    if (ReadyState.CLOSED == self.readyState) return;
 
                                     logger.fine("changing transport and sending upgrade packet");
 
@@ -648,6 +666,10 @@ public class Socket extends Emitter {
     }
 
     private void sendPacket(Packet packet, Runnable fn) {
+        if (ReadyState.CLOSING == this.readyState || ReadyState.CLOSED == this.readyState) {
+            return;
+        }
+
         if (fn == null) {
             // ConcurrentLinkedList does not permit `null`.
             fn = noop;
@@ -669,11 +691,55 @@ public class Socket extends Emitter {
             @Override
             public void run() {
                 if (Socket.this.readyState == ReadyState.OPENING || Socket.this.readyState == ReadyState.OPEN) {
-                    Socket.this.onClose("forced close");
-                    logger.fine("socket closing - telling transport to close");
-                    Socket.this.transport.close();
-                }
+                    Socket.this.readyState = ReadyState.CLOSING;
 
+                    final Socket self = Socket.this;
+
+                    final Runnable close = new Runnable() {
+                        @Override
+                        public void run() {
+                            self.onClose("forced close");
+                            logger.fine("socket closing - telling transport to close");
+                            self.transport.close();
+                        }
+                    };
+
+                    final Listener[] cleanupAndClose = new Listener[1];
+                    cleanupAndClose[0] = new Listener() {
+                        @Override
+                        public void call(Object ...args) {
+                            self.off(EVENT_UPGRADE, cleanupAndClose[0]);
+                            self.off(EVENT_UPGRADE_ERROR, cleanupAndClose[0]);
+                            close.run();
+                        }
+                    };
+
+                    final Runnable waitForUpgrade = new Runnable() {
+                        @Override
+                        public void run() {
+                            // wait for updade to finish since we can't send packets while pausing a transport
+                            self.once(EVENT_UPGRADE, cleanupAndClose[0]);
+                            self.once(EVENT_UPGRADE_ERROR, cleanupAndClose[0]);
+                        }
+                    };
+
+                    if (Socket.this.writeBuffer.size() > 0) {
+                        Socket.this.once(EVENT_DRAIN, new Listener() {
+                            @Override
+                            public void call(Object... args) {
+                                if (Socket.this.upgrading) {
+                                    waitForUpgrade.run();
+                                } else {
+                                    close.run();
+                                }
+                            }
+                        });
+                    } else if (Socket.this.upgrading) {
+                        waitForUpgrade.run();
+                    } else {
+                        close.run();
+                    }
+                }
             }
         });
         return this;
@@ -691,7 +757,7 @@ public class Socket extends Emitter {
     }
 
     private void onClose(String reason, Exception desc) {
-        if (this.readyState == ReadyState.OPENING || this.readyState == ReadyState.OPEN) {
+        if (ReadyState.OPENING == this.readyState || ReadyState.OPEN == this.readyState || ReadyState.CLOSING == this.readyState) {
             logger.fine(String.format("socket close with reason: %s", reason));
             final Socket self = this;
 
