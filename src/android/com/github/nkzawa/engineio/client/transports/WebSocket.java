@@ -1,20 +1,24 @@
 package com.github.nkzawa.engineio.client.transports;
 
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.handshake.ServerHandshake;
+
 import com.github.nkzawa.engineio.client.Transport;
 import com.github.nkzawa.engineio.parser.Packet;
 import com.github.nkzawa.engineio.parser.Parser;
 import com.github.nkzawa.parseqs.ParseQS;
 import com.github.nkzawa.thread.EventThread;
-import org.java_websocket.client.DefaultSSLWebSocketClientFactory;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft_17;
-import org.java_websocket.handshake.ServerHandshake;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
-import java.util.*;
 
 public class WebSocket extends Transport {
 
@@ -94,9 +98,9 @@ public class WebSocket extends Transport {
                     });
                 }
             };
-            if (this.sslContext != null) {
-                this.ws.setWebSocketFactory(new DefaultSSLWebSocketClientFactory(this.sslContext));
-            }
+            //if (this.sslContext != null) {
+            //    this.ws.setWebSocketFactory(new DefaultSSLWebSocketClientFactory(this.sslContext));
+            //}
             this.ws.connect();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
