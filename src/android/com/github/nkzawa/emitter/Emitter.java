@@ -114,7 +114,7 @@ public class Emitter {
         ConcurrentLinkedQueue<Listener> callbacks = this.callbacks.get(event);
         if (callbacks != null) {
             for (Listener fn : callbacks) {
-                fn.call(args);
+                fn.call(event, args);
             }
         }
         return this;
@@ -145,7 +145,7 @@ public class Emitter {
 
     public static interface Listener {
 
-        public void call(Object... args);
+        public void call(String event, Object... args);
     }
 
     private class OnceListener implements Listener {
@@ -161,7 +161,7 @@ public class Emitter {
         @Override
         public void call(Object... args) {
             Emitter.this.off(this.event, this);
-            this.fn.call(args);
+            this.fn.call(this.event, args);
         }
     }
 }
